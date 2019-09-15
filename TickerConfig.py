@@ -6,19 +6,13 @@
 # 刷票模式：1=刷票 2=候补+刷票
 TICKET_TYPE = 2
 
-# 候补最晚兑现日期，目前软件为捡漏加自动候补，所以这个值一定要填，并且这个日期一定要填小于最长订票时间(30天)
-# 格式为日期+小时+分
-# 举例： 比如今天才可以买10.1号的票，比如你那个发车是10.1号上午两点，你兑现时间写到10.1晚上22点？
-# t("#fromDate").val() + "#" + t("#dafaultTime").html().replace("时", "") + "#" + t("#dafaultMinutes").html().replace("分", ""),
-J_Z_PARAM = "2019-09-28#22#59"
-
 # 出发日期(list) "2018-01-06", "2018-01-07"
-# ps: 日期如果是单日，一定要前面补个0，正确做法：2019-01-01， 错误做法：2019-1-1
 STATION_DATES = [
-    "2019-09-25"
+    "2019-10-01"
 ]
 
 # 填入需要购买的车次(list)，"G1353"
+# 修改车次填入规则，注：(以前设置的车次逻辑不变)，如果车次填入为空，那么就是当日乘车所有车次都纳入筛选返回
 STATION_TRAINS = [
     "",
 ]
@@ -78,7 +72,7 @@ IS_AUTO_CODE = True
 #  password: "授权码"
 #  host: "smtp.qq.com"
 EMAIL_CONF = {
-    "IS_MAIL": False,
+    "IS_MAIL": True,
     "email": "",
     "notice_email_list": "",
     "username": "",
@@ -86,10 +80,10 @@ EMAIL_CONF = {
     "host": "",
 }
 
-# 是否开启 pushbear 微信提醒， 使用前需要前往 http://pushbear.ftqq.com 扫码绑定获取 send_key 并关注获得抢票结果通知的公众号
-PUSHBEAR_CONF = {
-    "is_pushbear": False,
-    "send_key": ""
+# 是否开启 server酱 微信提醒， 使用前需要前往 http://sc.ftqq.com/3.version 扫码绑定获取 SECRET 并关注获得抢票结果通知的公众号
+SERVER_CHAN_CONF = {
+    "is_server_chan": False,
+    "secret": ""
 }
 
 # 是否开启cdn查询，可以更快的检测票票 1为开启，2为关闭
@@ -115,10 +109,12 @@ OPEN_TIME = "13:00:00"
 # 1=使用selenium获取devicesID
 # 2=使用网页端/otn/HttpZF/logdevice获取devicesId，这个接口的算法目前可能有点问题，如果登录一直302的请改为配置1
 COOKIE_TYPE = 1
-# 如果COOKIE_TYPE=1，则需配置chromeDriver路径(注意是填你机器本地chromeDriver的路径，这个地方一定要改),下载地址http://chromedriver.storage.googleapis.com/index.html
+# 如果COOKIE_TYPE=1，则需配置chromeDriver路径,下载地址http://chromedriver.storage.googleapis.com/index.html
 # chromedriver配置版本只要和chrome的大版本匹配就行
-# 如果是windows,最好在路径加上r, ex: r"/Users/wenxianping/Downloads/chromedriver"
 CHROME_PATH = ""
+
+# 1=>为一直随机ua,2->只启动的时候随机一次ua
+RANDOM_AGENT = 2
 
 PASSENGER_TICKER_STR = {
     '一等座': 'M',
@@ -132,5 +128,10 @@ PASSENGER_TICKER_STR = {
     '硬卧': 3,
 }
 
+# 保护12306官网请求频率，设置随机请求时间，原则为5分钟不大于80次
+# 最大间隔请求时间
+MAX_TIME = 5
+# 最小间隔请求时间
+MIN_TIME = 3
 # 软件版本
-RE_VERSION = "1.1.106"
+RE_VERSION = "1.1.113"
